@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE prjdoc
+	PUBLIC "-//DocTools//DTD General Project Doc//EN" 
+	       "dtd/DocTools/prjdoc.dtd" [
+
+ <!ENTITY TOP.DIR "..">
+ <!ENTITY % projectEntity
+	PUBLIC "-//Project//ENTITY Project Variables//EN"
+	       "../dtd/project.ent">
+ %projectEntity;
+]>
+<?xml-stylesheet
+    href="xsl/DocTools/html/prjdoc.xsl"
+    type="text/xsl" ?>
+
+<prjdoc>
+  <dochead>
+    <title>
+       &PRJ.NAME; Production Install Documentation
+    </title>
+    <subtitle>
+       
+    </subtitle>
+    <docdesc>
+      Details the procedure to build and install &PRJ.NAME; for
+      production or testing.
+    </docdesc>
+    <keywords>
+       
+    </keywords>
+    <authorgrp>
+      <author fullname="Paul Houghton 719-527-7834"
+	      email="paul.houghton@mci.com"/>
+    </authorgrp>
+    <projectname>
+      &PRJ.NAME;
+    </projectname>
+    <docversion
+        created="06/20/01 11:58"
+        verprj=" "
+        veritem="=VER_ITEM="
+	verlastmodby="$Author$"
+        verlastmod="$Date$"
+        verversion="$Revision$"
+	verstatus="=VER_STATUS="
+        verversionid="$Id$"/>
+    <contact>&PRJ.XML.CONTACT;</contact>
+  </dochead>
+
+  <body>
+    <p>
+      Note: These instructions assume you are using the ksh shell.You
+      should also check the
+      <doc doc="../Prerequisites">Prerequisites</doc> document
+      before you get started.
+    </p>
+    <sect>
+      <heading>Installing the Project Files</heading>
+      <sectbody>
+	<p>
+	  The install script provided by the
+	  <doc doc="../Test/Build">Build</doc> processing has options
+	  to backup, uninstall and install the project's files.
+	  Use the --help option for the syntax of these commands. If
+	  a previous version of the project was installed in the same
+	  BASE_DIR, it would best to use the -backup and -uninstall
+	  options of the Install script is currently in
+	  BASE_DIR/scripts.
+	</p>
+	<p>
+	  After uninstalling the previous version (or if there was not
+	  a previouse version installed), locate the new install
+	  script and cpio file, change to the directory that contains
+	  them and run the command:
+	</p>
+	<p>
+	  <indent>
+	    <code>
+	      &INSTALL.SCRIPT; --install <br />
+	    </code>
+	  </indent>
+	</p>
+      </sectbody>
+    </sect>
+  </body>
+
+</prjdoc>
+
+<!-- Revision Log:
+
+#
+# $Log$
+# Revision 1.1  2003/07/20 14:15:24  houghton
+# Initial Version.
+#
+#
+
+-->
+
+<!-- Xemacs Local Variables -->
+
+<!-- Local Variables: -->
+<!-- mode:xml -->
+<!-- End: -->

@@ -1,0 +1,93 @@
+#
+# File:		ArgProc.kfn
+# Project:	KshUtils 
+# Desc:
+#
+#   
+#   ArgProc - command line argement processor
+#
+#	Process command line arguments and create variables that contain the
+#	value for each arg.
+#
+#
+#	Known args:
+#
+#	    -help	set $help to 'true'
+#	    -run	set $run to 'true'
+#
+#	Example:  script -in test.in -out test.out -err test.err one two three
+#
+#	    ArgProc "$@"
+#
+#	Results:
+#
+#	    variable	    value
+#           -----------     -------------------------
+#	    $in			    test.in
+#	    $out		    test.out
+#	    $err		    test.err
+#	    $ArgProc_other_args	    "one two three"
+#	    $ArgProc_arg_list	    "in out err"
+#
+# Notes:
+#
+# Author(s):   Paul Houghton 719-527-7834 <paul.houghton@mci.com>
+# Created:     10/31/97 06:43
+#
+# Revision Info: 
+#
+#	$Author$
+#	$Date$
+#	$Name$
+#	$Revision$
+#	$State$
+#
+# $Id$
+#
+
+function ArgProc {
+  if [ ${KFN_DEBUG:-0} -ge 10 ] ; then
+    set -x
+  fi
+  
+  ArgProc_arg_list=
+  ArgProc_other_args=
+
+  ArgProc_prev_arg=
+  
+  for ArgProc_arg in "$@" ; do
+
+    if [ -n "$ArgProc_prev_arg" ] ; then
+      eval "$ArgProc_prev_arg=\$ArgProc_arg"
+      ArgProc_prev_arg=
+    else
+      case "$ArgProc_arg" in 
+	-help | --help)
+	  help=true
+	  ;;
+	
+	-run | --run)
+	  run=true
+	  ;;
+	  
+	-* )
+	  ArgProc_prev_arg=`echo $ArgProc_arg | sed 's/-\([a-zA-Z0-9_]*\)/\1/'`;
+	  ArgProc_arg_list="$ArgProc_arg_list $ArgProc_prev_arg"
+	  ;;
+	
+	* )
+	  ArgProc_other_args="$ArgProc_other_args $ArgProc_arg";
+	  ;;
+	
+      esac
+    fi
+  
+  done
+}
+
+arg_proc_kfn_loaded=true
+
+
+# Local Variables:
+# mode:ksh
+# End:

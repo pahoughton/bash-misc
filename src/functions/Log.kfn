@@ -1,0 +1,84 @@
+#
+# File:		Log.kfn
+# Project:	KshUtils 
+# Desc:
+#
+#   
+#
+# Notes:
+#
+# Author(s):   Paul Houghton 719-527-7834 <paul.houghton@mci.com>
+# Created:     10/31/97 06:43
+#
+# Revision Info:
+#
+#	$Author$
+#	$Date$
+#	$Name$
+#	$Revision$
+#	$State$
+#
+# $Id$
+#
+
+function Log {
+  logfile=$LogDir/$1
+  shift
+  echo `date '+%D %T'` "$*" >> $logfile
+}
+
+function Error {
+  errlog=$1
+  shift
+  Log $errlog "ERROR $*"
+}
+
+function ErrorAppend {
+  errlog=$1
+  fn=$2
+  Log $errlog "ERROR Start Contents of $fn"
+  cat $fn >> $LogDir/$errlog
+  Log $errlog "ERROR End Contents of $fn"
+}
+  
+function Debug {
+  debuglog=$1
+  shift
+  if [ ${LOG_DEBUG:-0} -ge 1 ] ; then
+    Log $debuglog "DEBUG $*"
+  fi
+}
+  
+function DebugAppend {
+  debuglog=$1
+  fn=$2
+  if [ ${LOG_DEBUG:-0} -ge 1 ] ; then
+    Log $debuglog "DEBUG Start Contents of $fn"
+    cat $fn >> $LogDir/$debuglog
+    Log $debuglog "DEBUG End Contents of $fn"
+  fi
+}  
+
+function TrimLog {
+  tl_file=$LogDir/$1
+  tl_max=$2
+  
+  if [ -f $tl_file ] ; then 
+    tl_size=`ls -l $tl_file | sed 's/  */ /g' | cut -d' ' -f5`
+
+    if [ $tl_size -gt $tl_max ] ; then
+      tl_lines=`LineCount $tl_file`
+      let "tl_keeplines = $tl_lines / 4 * 3"
+      tail -$tl_keeplines $tl_file > $1.tmp.$$
+      rm -f $tl_file
+      mv $1.tmp.$$ $tl_file
+    fi
+  fi
+  
+}
+
+log_kfn_loaded=true
+
+# Local Variables:
+# mode:ksh
+# End:

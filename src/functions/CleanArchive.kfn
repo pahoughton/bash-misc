@@ -1,0 +1,58 @@
+#
+# File:		CleanArchive.kfn
+# Project:	KshUtils 
+# Desc:
+#
+#   
+#
+# Notes:
+#
+# Author(s):   Paul Houghton 719-527-7834 <paul.houghton@mci.com>
+# Created:     10/31/97 06:43
+#
+# Revision History: (See end of file for Revision Log)
+#
+#	$Author$
+#	$Date$
+#	$Name$
+#	$Revision$
+#	$State$
+#
+# $Id$
+#
+
+function CleanArchive {
+  if [ ${KFN_DEBUG:-0} -ge 10 ] ; then
+    set -x
+  fi
+
+  a_dir=$1
+  a_keep_days=$2
+  a_group=$3
+  a_logfile=$4
+  a_errlog=$5
+  
+  a_find_args="-type f -mtime $a_keep_days -group $a_group -print"
+  a_find_args="$a_find_args -o -type f -mtime +$a_keep_days -group $a_group -print"
+
+  Log $a_logfile "INFO cleaning $a_dir $a_keep_days days."
+  
+  if [ "$a_dir" != "$NoDir" ] ; then
+    a_curdir=`pwd`
+    if cd "$a_dir" ; then
+      for fn in `find . $a_find_args 2> /dev/null` ; do
+	Log $a_logfile "INFO removing $fn"
+	if [ ${NCM_DEBUG:-0} -lt 2 ] ; then
+	  rm -f $fn
+	fi
+      done
+      cd "$a_curdir"
+    else
+      Error $a_errlog "cd '$a_dir' FAILED."
+    fi
+  fi
+}
+
+# Local Variables:
+# mode:ksh
+# End:
