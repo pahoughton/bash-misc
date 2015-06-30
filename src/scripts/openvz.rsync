@@ -1,0 +1,2 @@
+set -x
+rsync -rlptgoszH --one-file-system --numeric-ids --exclude-from=/home/phough201/daneel/openvz.excludes $*
