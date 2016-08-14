@@ -1,37 +1,17 @@
-#
-# Title:        Makefile
-# Project:	Scripts
-# Desc:
-# 
-#   
-# 
-# Notes:
-# 
-# Author:	Paul A. Houghton - (paul.houghton@wcom.com)
-# Created:	06/22/99 06:32
-#
-# Revision History: (See end of file for Revision Log)
-#
-#   Last Mod By:    $Author$
-#   Last Mod:	    $Date$
-#   Version:	    $Revision$
-#
-#   $Id$
-# 
-
-
-
-install:
-	$(MAKE) -C ../home install
-
-
-#
-# $Log$
-# Revision 1.1  2003/05/18 23:47:02  houghton
-# *** empty log message ***
-#
+# 1999-06-22 (cc) paul4hough@gmail.com
 #
 
-# Local Variables:
-# mode:makefile
-# End:
+DEST_DIR     = $(HOME)/scripts
+
+BASH_SCRIPTS =				\
+	gen-yum-repo-file.bash		\
+
+
+SCRIPTS	= $(BASH_SCRIPTS:%.bash=%)
+TARGETS = $(SCRIPTS:%=$(DEST_DIR)/%)
+
+$(DEST_DIR)/%: %.bash
+	install $< $@
+
+install: $(TARGETS)
+	echo done
