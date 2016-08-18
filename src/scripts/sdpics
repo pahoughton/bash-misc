@@ -1,0 +1,5 @@
+xset s off
+xset -dpms
+feh -A 'mv %F /srv/media/image/dptrash' -zsZFD 45 /srv/media/image/desktop-pictures/* /srv/media/image/photos/family-photos/*/*
+xset +dpms
+xset s on
