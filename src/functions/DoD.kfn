@@ -1,0 +1,12 @@
+# 2016-12-19 (cc) <paul4hough@gmail.com> -*- shell-mode -*-
+#
+
+function DoD {
+DoD() {
+  if ! $*
+  then
+    code=$?
+    echo error:$code: "$*"
+    exit $code
+  fi
+}
