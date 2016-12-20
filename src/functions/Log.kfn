@@ -1,25 +1,4 @@
-#
-# File:		Log.kfn
-# Project:	KshUtils 
-# Desc:
-#
-#   
-#
-# Notes:
-#
-# Author(s):   Paul Houghton 719-527-7834 <paul.houghton@mci.com>
-# Created:     10/31/97 06:43
-#
-# Revision Info:
-#
-#	$Author$
-#	$Date$
-#	$Name$
-#	$Revision$
-#	$State$
-#
-# $Id$
-#
+# 1997-10-31 (cc) <paul4hough@gmail.com>
 
 function Log {
   logfile=$LogDir/$1
@@ -40,7 +19,7 @@ function ErrorAppend {
   cat $fn >> $LogDir/$errlog
   Log $errlog "ERROR End Contents of $fn"
 }
-  
+
 function Debug {
   debuglog=$1
   shift
@@ -48,7 +27,7 @@ function Debug {
     Log $debuglog "DEBUG $*"
   fi
 }
-  
+
 function DebugAppend {
   debuglog=$1
   fn=$2
@@ -57,13 +36,13 @@ function DebugAppend {
     cat $fn >> $LogDir/$debuglog
     Log $debuglog "DEBUG End Contents of $fn"
   fi
-}  
+}
 
 function TrimLog {
   tl_file=$LogDir/$1
   tl_max=$2
-  
-  if [ -f $tl_file ] ; then 
+
+  if [ -f $tl_file ] ; then
     tl_size=`ls -l $tl_file | sed 's/  */ /g' | cut -d' ' -f5`
 
     if [ $tl_size -gt $tl_max ] ; then
@@ -74,7 +53,7 @@ function TrimLog {
       mv $1.tmp.$$ $tl_file
     fi
   fi
-  
+
 }
 
 log_kfn_loaded=true
