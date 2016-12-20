@@ -33,8 +33,7 @@ while read path; do
     #echo "  committed"
   else
     let "uncommitted+=1"
-    echo git:$prjdir:$origin
-    echo "  UNcommitted"
+    echo git:$prjdir:$origin: UNcommitted
     git diff --name-status $origin
   fi
   if [ -f .gitignore ] ; then
@@ -44,8 +43,8 @@ while read path; do
   fi
   if [ -n "$unlisted" ] ; then
     let "uncommitted+=1"
-    echo "  UNlisted"
-    echo $unlisted
+    echo git:$prjdir:$origin: UNlisted
+    echo '??' $unlisted
   fi
   popd > /dev/null
 done <<< "$(find $dirs -type d -name .git)"
